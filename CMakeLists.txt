@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ImGuiApp)
+project(node.ai)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -7,24 +7,26 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     src/node/*.cpp
+    src/ui/*.cpp
     imgui/*.cpp
     backends/*.cpp
 )
 
-add_executable(ImGuiApp ${SOURCES})
+add_executable(node.ai ${SOURCES})
 
 # Include directories
-target_include_directories(ImGuiApp PRIVATE
+target_include_directories(node.ai PRIVATE
     ${CMAKE_SOURCE_DIR}/imgui
     ${CMAKE_SOURCE_DIR}/backends
     ${CMAKE_SOURCE_DIR}/include/node
+    ${CMAKE_SOURCE_DIR}/include/ui
 )
 
 # Link GLFW, OpenGL, etc.
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
-target_link_libraries(ImGuiApp PRIVATE
+target_link_libraries(node.ai PRIVATE
     OpenGL::GL
     glfw
 )

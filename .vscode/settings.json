@@ -70,6 +70,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "format": "cpp",
-        "stdfloat": "cpp"
+        "stdfloat": "cpp",
+        "unordered_set": "cpp"
     }
 }
