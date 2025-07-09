@@ -12,6 +12,7 @@ bool IntNode::evaluate(){
 }
 
 void IntNode::draw(){
+    ImGui::SetCursorPos(get_pos());
     ImNodes::BeginNode(get_uid());
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted(get_node_name());

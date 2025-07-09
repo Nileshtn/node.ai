@@ -21,7 +21,7 @@ namespace UI{
         ImVec2 size;
         std::function<void()> onClick;
     public:
-        Button(std::string& label, std::function<void()> onClick);
+        Button(std::string label, std::function<void()> onClick);
         void draw(ImVec2 pos) override;
         ~Button();
     };

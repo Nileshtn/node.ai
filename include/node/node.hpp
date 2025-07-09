@@ -17,6 +17,7 @@ class UINode
 private:
     int uid{};
     const char* name {};
+    ImVec2 pos;
 
 protected:
     std::vector<int> in_link_id;
@@ -25,11 +26,14 @@ protected:
     std::vector<int> out_attr;
 
 public:
+    bool position_set = false;
     UINode(int uid, const char* name);
     virtual ~UINode();
     virtual bool evaluate() = 0;
     virtual void draw() = 0;
     int get_uid();
+    void set_pos(ImVec2 pos);
+    ImVec2 get_pos();
     const char* get_node_name();
 };
 

@@ -21,6 +21,10 @@ bool AddNode::evaluate(){
 
 void AddNode::draw(){
     // Add Node
+    if (!position_set) {
+        ImNodes::SetNodeGridSpacePos(get_uid(), get_pos());
+        position_set = true;
+    }
     ImNodes::BeginNode(get_uid());
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted(get_node_name());

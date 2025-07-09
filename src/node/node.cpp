@@ -2,9 +2,6 @@
 #include <algorithm>
 #include <string>
 
-UINode::UINode(int uid, const char* name) : uid(uid), name(name) {}
-UINode::~UINode(){}
-
 int UINode::get_uid(){
     return uid;
 }
@@ -12,6 +9,18 @@ int UINode::get_uid(){
 const char* UINode::get_node_name(){
     return name;
 }
+
+void UINode::set_pos(ImVec2 pos){
+    this->pos = pos;
+}
+
+ImVec2 UINode::get_pos(){
+    return pos;
+}
+
+UINode::UINode(int uid, const char* name) : uid(uid), name(name) {}
+UINode::~UINode(){}
+
 
 
 NodeManager::NodeManager(){};

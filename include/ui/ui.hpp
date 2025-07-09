@@ -13,18 +13,24 @@
 #include "node.hpp"
 #include "variable_nodes.hpp"
 #include "math_nodes.hpp"
+#include "ui_elements.hpp"
 
 
 class MainUI
 {
 private:
     GLFWwindow* window;
-public:
     ImVec2 window_pos;
     ImVec2 window_size;
     ImGuiWindowFlags window_flags;
-    std::unique_ptr<NodeManager> nodeManager;
+    UI::Button* addNodeButton;
+    UI::Button* intNodeButton;
 
+public:
+    std::unique_ptr<NodeManager> nodeManager;
+    
+    std::function<void()> on_click_add_node_button();
+    std::function<void()> on_click_int_node_button();
     MainUI(GLFWwindow* window);
     ~MainUI();
     void draw();
