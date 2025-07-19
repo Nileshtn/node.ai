@@ -1,6 +1,16 @@
 #pragma once
 
 #include "node.hpp"
+#include <variant>
+#include <unordered_map>
+#include <vector>
+
+
+struct add_output : output_point
+{
+    std::variant<int, float, std::string> value;
+};
+
 
 namespace mnode
 {
@@ -8,13 +18,11 @@ namespace mnode
     {
     private:
         const char* node_type = "addition";
-        float value_1 {0.0f};
-        float value_2 {0.0f};
-        int value_1_id {};
-        int value_2_id {};
-        float output {};
-        int output_id {};
-        
+        std::vector<input_point> input;
+        std::vector<add_output> output;
+        std::vector<input_point> get_inputs() override;
+        std::vector<output_point> get_outputs() override;
+
 
     public:
         AddNode(int uid, const char* name, int v1_id, int v2_id, int out_id);

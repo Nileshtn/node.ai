@@ -5,6 +5,8 @@
 #include <vector>
 #include "imnodes.h"
 
+struct input_point;
+struct output_point;
 
 struct Link {
     int id;
@@ -19,18 +21,16 @@ private:
     const char* name {};
     ImVec2 pos;
 
-protected:
-    std::vector<int> in_link_id;
-    std::vector<int> out_link_id;
-    std::vector<int> in_attr;
-    std::vector<int> out_attr;
-
 public:
-    bool position_set = false;
     UINode(int uid, const char* name);
     virtual ~UINode();
+    bool position_set = false;
+    std::vector<UINode*> connected_nodes;
     virtual bool evaluate() = 0;
     virtual void draw() = 0;
+    virtual std::vector<input_point> get_inputs() = 0;
+    virtual std::vector<output_point> get_outputs() = 0;
+
     int get_uid();
     void set_pos(ImVec2 pos);
     ImVec2 get_pos();
@@ -59,5 +59,18 @@ public:
     void delete_nodes(int node_id);
     void delete_links(int link_id);
 };
+
+
+struct input_point
+{
+    int attr_id;
+    UINode* node;
+};
+
+struct output_point
+{
+    int attr_id;
+};
+
 
 #endif //NODE_HPP

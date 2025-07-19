@@ -49,9 +49,35 @@ void NodeManager::add_node(UINode* node){
 void NodeManager::create_link(){
     int start_attr, end_attr;
     int uid = generate_luid();
+    UINode* start_node;
+    UINode* end_node;
     if (ImNodes::IsLinkCreated(&start_attr, &end_attr)) {
-            links.push_back({uid, start_attr, end_attr });
+            links.push_back({uid, start_attr, end_attr});
+        
+    
+        for(UINode* node : nodes){
+            for(output_point point : node->get_outputs()){
+                if(point.attr_id == start_attr){
+                    start_node = node;
+                    continue;
+                }
+            }
+            
+            for(input_point point : node->get_inputs()){
+                if(point.attr_id == end_attr){
+                    end_node = node;
+                    continue;
+                }
+            }
         }
+
+        end_node->connected_nodes.push_back(start_node);
+        for(input_point point : end_node->get_inputs()){
+            if(point.attr_id == end_attr){
+                point.node = start_node;
+            }
+        }
+    }
 }
 
 void NodeManager::draw_links(){
