@@ -56,15 +56,15 @@ void NodeManager::create_link(){
         
     
         for(UINode* node : nodes){
-            for(output_point point : node->get_outputs()){
-                if(point.attr_id == start_attr){
+            for(output_point* point : node->get_outputs()){
+                if(point->attr_id == start_attr){
                     start_node = node;
                     continue;
                 }
             }
             
-            for(input_point point : node->get_inputs()){
-                if(point.attr_id == end_attr){
+            for(input_point* point : node->get_inputs()){
+                if(point->attr_id == end_attr){
                     end_node = node;
                     continue;
                 }
@@ -72,9 +72,9 @@ void NodeManager::create_link(){
         }
 
         end_node->connected_nodes.push_back(start_node);
-        for(input_point point : end_node->get_inputs()){
-            if(point.attr_id == end_attr){
-                point.node = start_node;
+        for(input_point* point : end_node->get_inputs()){
+            if(point->attr_id == end_attr){
+                point->node = start_node;
             }
         }
     }
@@ -110,4 +110,9 @@ void NodeManager::delete_links(int link_id) {
             }),
         links.end()
     );
+}
+
+
+std::vector<UINode*> NodeManager::get_nodes(){
+    return nodes;
 }

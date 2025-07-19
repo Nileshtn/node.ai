@@ -16,6 +16,8 @@ MainUI::MainUI(GLFWwindow* window) : window(window)
     //Buttons section
     addNodeButton = new UI::Button(std::string("Add"),on_click_add_node_button());
     intNodeButton = new UI::Button(std::string("Int"),on_click_int_node_button());
+    evaluateButton = new UI::Button(std::string("Evaluate"),on_click_evaluate_button());
+
 
 }
 
@@ -57,6 +59,14 @@ std::function<void()> MainUI::on_click_int_node_button(){
     };
 }
 
+std::function<void()> MainUI::on_click_evaluate_button(){
+    return [this](){
+        for(UINode* node : nodeManager->get_nodes()){
+            node->evaluate();
+        }
+    };
+}
+
 MainUI::~MainUI()
 {
     ImNodes::DestroyContext();
@@ -87,13 +97,13 @@ void MainUI::draw(){
             nodeManager->draw_nodes();
             nodeManager->draw_links();
         ImNodes::EndNodeEditor();
-// 
         nodeManager->create_link();
     ImGui::End();
     ImGui::Begin("Tools", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
         if (ImGui::CollapsingHeader("Add Nodes")) {
             if (addNodeButton) addNodeButton->draw(ImVec2(0, 0));
             if (intNodeButton) intNodeButton->draw(ImVec2(0, 0));
+            if (evaluateButton) evaluateButton->draw(ImVec2(0, 0));
         }
     ImGui::End();
     ImGui::Render();

@@ -7,7 +7,7 @@ AddNode::AddNode(int uid, const char* name, int v1_id, int v2_id, int out_id) :
             {
                 input_point input1{v1_id};
                 input_point input2{v2_id};
-                add_output output1{out_id, 0.0f};
+                output_point output1{out_id, 0.0f};
 
                 input.push_back(input1);
                 input.push_back(input2);
@@ -18,21 +18,40 @@ AddNode::~AddNode(){}
 
 
 bool AddNode::evaluate(){
-    return false;
+    float value_1{}, value_2{};
+    for(output_point* point : input[0].node->get_outputs()){
+        value_1 = std::any_cast<float>(point->value);
+    }
+
+    for(output_point* point : input[1].node->get_outputs()){
+        value_2 = std::any_cast<float>(point->value);
+    }
+
+    output[0].value = value_1 + value_2;
+    ImGui::LogToTTY();
+        float value = std::any_cast<float>(output[0].value);
+        ImGui::LogText("added : value = %f\n", value);
+    ImGui::LogFinish();
 }
 
-std::vector<output_point> AddNode::get_outputs(){
-    std::vector<output_point> r_output;
+std::vector<output_point*> AddNode::get_outputs(){
+    std::vector<output_point*> r_output;
     
-    for(add_output out : output){
-        output_point new_out_point{out.attr_id};
+    for(output_point out : output){
+        output_point* new_out_point = new output_point{out.attr_id};
         r_output.push_back(new_out_point);
     }
     return r_output;
 }
 
-std::vector<input_point> AddNode::get_inputs(){
-    return input;
+std::vector<input_point*> AddNode::get_inputs(){
+    std::vector<input_point*> r_input;
+
+    for(input_point in : input){
+        input_point* new_in_point = new input_point{in.attr_id};
+        r_input.push_back(new_in_point);
+    }
+    return r_input;
 }
 
 void AddNode::draw(){

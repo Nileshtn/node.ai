@@ -25,12 +25,15 @@ private:
     ImGuiWindowFlags window_flags;
     UI::Button* addNodeButton;
     UI::Button* intNodeButton;
+    UI::Button* evaluateButton;
+
 
 public:
     std::unique_ptr<NodeManager> nodeManager;
     
     std::function<void()> on_click_add_node_button();
     std::function<void()> on_click_int_node_button();
+    std::function<void()> on_click_evaluate_button();
     MainUI(GLFWwindow* window);
     ~MainUI();
     void draw();

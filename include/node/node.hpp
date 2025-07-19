@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <any>
 #include "imnodes.h"
 
 struct input_point;
@@ -28,8 +29,8 @@ public:
     std::vector<UINode*> connected_nodes;
     virtual bool evaluate() = 0;
     virtual void draw() = 0;
-    virtual std::vector<input_point> get_inputs() = 0;
-    virtual std::vector<output_point> get_outputs() = 0;
+    virtual std::vector<input_point*> get_inputs() = 0;
+    virtual std::vector<output_point*> get_outputs() = 0;
 
     int get_uid();
     void set_pos(ImVec2 pos);
@@ -58,6 +59,7 @@ public:
     void draw_nodes();
     void delete_nodes(int node_id);
     void delete_links(int link_id);
+    std::vector<UINode*> get_nodes();
 };
 
 
@@ -70,6 +72,7 @@ struct input_point
 struct output_point
 {
     int attr_id;
+    std::any value;
 };
 
 
