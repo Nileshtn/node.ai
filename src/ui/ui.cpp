@@ -1,6 +1,8 @@
 #include "ui.hpp"
 #include "imgui_vec2_utils.hpp"
 
+/*this file contains the entire code of the ui this this like the UI file and its funtionallity*/
+
 MainUI::MainUI(GLFWwindow* window) : window(window)
 {
     IMGUI_CHECKVERSION();

@@ -29,7 +29,10 @@ std::vector<output_point*> IntNode::get_outputs(){
 }
 
 void IntNode::draw(){
-    ImGui::SetCursorPos(get_pos());
+    if (!position_set) {
+        ImNodes::SetNodeGridSpacePos(get_uid(), get_pos());
+        position_set = true;
+    }
     ImNodes::BeginNode(get_uid());
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted(get_node_name());

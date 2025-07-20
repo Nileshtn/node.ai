@@ -71,11 +71,11 @@ std::vector<input_point*> AddNode::get_inputs() {
 
 void AddNode::draw(){
     // Add Node
+    ImNodes::BeginNode(get_uid());
     if (!position_set) {
         ImNodes::SetNodeGridSpacePos(get_uid(), get_pos());
         position_set = true;
     }
-    ImNodes::BeginNode(get_uid());
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted(get_node_name());
     ImNodes::EndNodeTitleBar();
