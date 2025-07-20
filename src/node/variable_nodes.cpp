@@ -1,4 +1,5 @@
 #include "variable_nodes.hpp"
+#include <iostream>
 
 using namespace vnode;
 
@@ -10,6 +11,7 @@ IntNode::IntNode(int uid, const char* name, int out_id) : UINode(uid, name){
 IntNode::~IntNode(){}
 
 bool IntNode::evaluate(){
+    // std::cout << "int value" << std::any_cast<int>(output[0].value) << std::endl;
     return false;
 }
 
@@ -20,10 +22,8 @@ std::vector<input_point* > IntNode::get_inputs(){
 
 std::vector<output_point*> IntNode::get_outputs(){
     std::vector<output_point*> r_output;
-    
-    for(output_point out : output){
-        output_point* new_out_point = new output_point{out.attr_id};
-        r_output.push_back(new_out_point);
+    for(auto& out : output){
+        r_output.push_back(&out);
     }
     return r_output;
 }

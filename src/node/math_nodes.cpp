@@ -1,4 +1,5 @@
 #include "math_nodes.hpp"
+#include <iostream>
 
 using namespace mnode;
 
@@ -16,40 +17,54 @@ AddNode::AddNode(int uid, const char* name, int v1_id, int v2_id, int out_id) :
 
 AddNode::~AddNode(){}
 
-
-bool AddNode::evaluate(){
+bool AddNode::evaluate() {
     float value_1{}, value_2{};
-    for(output_point* point : input[0].node->get_outputs()){
-        value_1 = std::any_cast<float>(point->value);
+
+    // Check pointers to avoid null dereference
+    // if (!input[0].node || !input[1].node) return false;
+    if(!input[0].node){
+        value_1 = 0.0f;
+    }
+    else{
+        for (output_point* point : input[0].node->get_outputs()) {
+        value_1 = (float)std::any_cast<int>(point->value);
+        }
     }
 
-    for(output_point* point : input[1].node->get_outputs()){
-        value_2 = std::any_cast<float>(point->value);
+    if(!input[0].node){
+        value_1 = 0.0f;
+    }
+    else{
+        for (output_point* point : input[1].node->get_outputs()) {
+        value_2 = (float)std::any_cast<int>(point->value);
+        }
     }
 
     output[0].value = value_1 + value_2;
+
+    // Optional: log to ImGui window
     ImGui::LogToTTY();
-        float value = std::any_cast<float>(output[0].value);
-        ImGui::LogText("added : value = %f\n", value);
+    float value = std::any_cast<float>(output[0].value);
+    ImGui::LogText("added : value = %f\n", value);
     ImGui::LogFinish();
+
+    return true;
 }
 
-std::vector<output_point*> AddNode::get_outputs(){
+
+
+std::vector<output_point*> AddNode::get_outputs() {
     std::vector<output_point*> r_output;
-    
-    for(output_point out : output){
-        output_point* new_out_point = new output_point{out.attr_id};
-        r_output.push_back(new_out_point);
+    for (auto& out : output) {
+        r_output.push_back(&out);
     }
     return r_output;
 }
 
-std::vector<input_point*> AddNode::get_inputs(){
+std::vector<input_point*> AddNode::get_inputs() {
     std::vector<input_point*> r_input;
-
-    for(input_point in : input){
-        input_point* new_in_point = new input_point{in.attr_id};
-        r_input.push_back(new_in_point);
+    for (auto& in : input) {
+        r_input.push_back(&in);
     }
     return r_input;
 }
